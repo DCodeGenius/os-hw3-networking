@@ -5,4 +5,6 @@
 #ifndef SERVER_H
 #define SERVER_H
 
+int GetAndParseClientName();
+
 #endif //SERVER_H
