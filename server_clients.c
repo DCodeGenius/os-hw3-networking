@@ -51,23 +51,3 @@ int RemoveClient(int fd){
   fprintf(stderr, "did not find a client with requested fd\n");
   return -1;
 }
-
-
-char* GetClientName(int fd){
-  for (int i = 0; i < MAX_CLIENTS; i++) {
-    if (clients.arr[i].fd == fd && clients.arr[i].in_use == 1) {
-      return clients.arr[i].name;
-    }
-  }
-  fprintf(stderr, "did not find a client with requested fd\n");
-  return NULL;
-}
-
-void InitClients(){
-  for (int i = 0; i < MAX_CLIENTS; i++) {
-    clients.arr[i].fd = -1;
-    clients.arr[i].in_use = 0;
-    clients.arr[i].name[0] = '\0';
-    clients.arr[i].ip[0] = '\0';
-  }
-}
