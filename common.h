@@ -1,8 +1,24 @@
-//
-// Created by danie on 26/12/2025.
-//
-
 #ifndef COMMON_H
 #define COMMON_H
 
-#endif //COMMON_H
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <unistd.h>
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/select.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+
+#define MAX_NAME_LEN 32
+#define MAX_MSG_LEN  1024
+
+static inline void sys_fail(const char *syscall_name) {
+    fprintf(stderr, "hw3: %s failed, errno is %d\n", syscall_name, errno);
+}
+
+#endif
