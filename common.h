@@ -14,8 +14,9 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-#define MAX_NAME_LEN 32
-#define MAX_MSG_LEN  1024
+#define MAX_NAME_LEN 258 // 256 + '\n' + '\0' = 258
+#define MAX_MSG_LEN  258
+#define MAX_NUM_OF_CLIENTS 16
 
 static inline void sys_fail(const char *syscall_name) {
     fprintf(stderr, "hw3: %s failed, errno is %d\n", syscall_name, errno);
