@@ -6,5 +6,5 @@
 #define SERVER_H
 
 int GetAndParseClientName();
-
+static void disconnect_fd(int fd, int listen_fd);
 #endif //SERVER_H

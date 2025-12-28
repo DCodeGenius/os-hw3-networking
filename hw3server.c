@@ -8,7 +8,9 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <errno.h>
 #include "server_clients.h"
+#include "protocol.h"
 
 
 fd_set read_set;
@@ -178,7 +180,7 @@ int main(int argc, char **argv){
                 continue;
             }
             else if (n < 0) {
-                perror("recv");
+                if (errno != ECONNRESET) perror("recv");
                 disconnect_fd(sender_fd, listen_fd);
                 continue;
             }
@@ -212,6 +214,16 @@ int main(int argc, char **argv){
 
                         /* whisper valid only if there is a space after friend */
                         if (fn > 0 && inbuf[k] == ' ') {
+                            // shift left to remove "@friend " (that's k+1 chars)
+                            memmove(inbuf, inbuf + (k + 1), strlen(inbuf + (k + 1)) + 1);
+
+                            /* REBUILD after removing @friend */
+                            outlen = snprintf(outbuf, sizeof(outbuf), "%s: %s", sender_name, inbuf);
+                            if (outlen < 0) outlen = 0;
+                            if (outlen >= (int)sizeof(outbuf)) outlen = (int)sizeof(outbuf) - 1;
+
+                            // now inbuf contains only "secret...\n"
+
                             /* find destination fd by name */
                             int dest_fd = -1;
                             for (int j = 0; j < MAX_CLIENTS; j++) {

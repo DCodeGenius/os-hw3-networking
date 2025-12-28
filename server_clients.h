@@ -6,7 +6,8 @@
 #define SERVER_CLIENTS_H
 #include <netinet/in.h>   // struct sockaddr_in
 #include <sys/types.h>
-#include <common.h>
+#include "common.h"
+
 
 
 
@@ -22,10 +23,12 @@ typedef struct ClientsTable {
     int count;                    // number of active clients
 } ClientsTable;
 
+extern ClientsTable clients;
+
 int AddClient(int fd,char* name, char* ip);
 int RemoveClient(int fd);
 char* GetClientName(int fd);
 void InitClients();
-static void disconnect_fd(int fd, int listen_fd);
+
 
 #endif //SERVER_CLIENTS_H
