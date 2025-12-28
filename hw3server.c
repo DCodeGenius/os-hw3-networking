@@ -217,6 +217,7 @@ int main(int argc, char **argv){
                             // shift left to remove "@friend " (that's k+1 chars)
                             memmove(inbuf, inbuf + (k + 1), strlen(inbuf + (k + 1)) + 1);
 
+
                             /* REBUILD after removing @friend */
                             outlen = snprintf(outbuf, sizeof(outbuf), "%s: %s", sender_name, inbuf);
                             if (outlen < 0) outlen = 0;
